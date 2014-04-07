@@ -1,0 +1,158 @@
+[alias]
+	br = branch
+	ci = commit
+	st = status
+	co = checkout
+
+	amend = commit --amend
+	who = shortlog -n -s --no-merges
+	g = grep -n --color -E
+    cp = cherry-pick -x
+
+	# Clone a repository including all submodules
+	cr = clone --recursive
+	
+	# Commit all changes
+	ca = !git add -A && git commit -av
+	
+	# Switch to a branch, creating it if necessary
+	go = checkout -B
+
+	# Reset
+	unstage = reset HEAD --
+	uncommit = reset --soft HEAD~
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+	# Interactive rebase with the given number of latest commits
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+	# Find commits by source code
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	# Remove branches that have already been merged with master
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+    # Diff
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+	# Add
+	# 'git add -u' handles deleted files, but not new files
+    # 'git add .' handles any current and new files, but not deleted
+    # 'git addall' now handles all changes
+    addall = !sh -c 'git add . && git add -u'
+
+    # Pull
+    # Pull in remote changes for the current repository and all its submodules
+	p = !"git pull; git submodule foreach git pull origin master"
+
+    # Rebase
+	# Handy shortcuts for rebasing
+	rb = rebase
+    rc = rebase --continue
+    rs = rebase --skip
+    ra = rebase --abort
+
+    # Log
+	l = log --oneline --decorate -12 --color
+  	ll = log --oneline --decorate --color
+  	lc = log --graph --color
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  	
+  	# Submodule
+	sb = submodule
+  	sbi = submodule init
+  	sba = submodule add
+  	sbu = submodule update
+  	sbp = submodule foreach git pull
+  	sbc = submodule foreach git co master
+	sbr = submodule update --init --recursive
+[apply]
+	# Detect whitespace errors when applying a patch
+	whitespace = fix
+[core]
+	editor = vim
+	# Use custom `.gitignore_global` and `.gitattributes_global`
+	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.gitattributes_global
+	# Treat spaces before tabs, lines that are indented with 8 or more spaces, and
+	# all kinds of trailing whitespace as an error.
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of
+	# a line
+	whitespace = space-before-tab,indent-with-non-tab,trailing-space
+	# Make `git rebase` safer on OS X
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+[color]
+	# Use colors in Git commands that are capable of colored output when
+	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+	ui = true
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan	
+[merge]
+	tool = vimdiff
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
+[mergetool]
+	keepBackup = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+	default = tracking
+[http]
+	postBuffer = 524288000
+[branch]
+    autosetuprebase = always
+[help]
+	autocorrect = 1
+[user]
+	name = Young Shook
+	email = shook.young@gmail.com
+[github]
+	user = youngshook
+	token = c46cf054693a6cc56589c3cf28ea7ef5
+[sendemail]
+	chainreplyto = false
+	smtpserver = /usr/bin/msmtp
+
+# URL shorthands
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"		
