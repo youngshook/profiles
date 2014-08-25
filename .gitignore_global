@@ -1,6 +1,7 @@
 # Node.js modules
 node_modules/*
-
+bundle/*
+!bundle/vundle
 # Compiled Python files
 *.pyc
 

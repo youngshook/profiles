@@ -43,13 +43,16 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git github brew ruby bundler gem rails rake autojump knife encode64 redis-cli supervisor urltools nginx pod cp osx web-search)
+plugins=(git github brew rvm ruby bundler gem rails rake autojump knife encode64 redis-cli supervisor urltools nginx pod cp osx web-search)
 
 export PATH=$PATH:/opt/iOSOpenDev/bin:/Users/YoungShook/.rvm/bin:/usr/local/nginx/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/sbin
-
 
 source $HOME/.aliases
 source $HOME/.exports
 source $HOME/.functions
 source $HOME/.extra
 source $ZSH/oh-my-zsh.sh
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
