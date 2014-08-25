@@ -156,9 +156,9 @@ endif
 
 """""New file""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Create .c,.h,.sh,.java file，auto insert file header 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetVimTitle()" 
 
-func SetTitle() 
+func SetVimTitle() 
     if &filetype == 'sh' 
         call setline(1,"\#########################################################################") 
         call append(line("."), "\# File Name: ".expand("%")) 
